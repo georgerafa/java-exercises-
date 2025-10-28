@@ -1,25 +1,21 @@
 import java.util.Random;
 
 public class SpecialMatrix {
-    private int[][] matrix;  // 2D array
-    private int n;           // dimension of the matrix
+    private int[][] matrix;
+    private int n;           
 
-    // Constructor: allocates space for the square matrix
     public SpecialMatrix(int n) {
         this.n = n;
         matrix = new int[n][n];
     }
 
-    // Creates the "special" matrix
     public void createSpecialMatrix() {
         Random rand = new Random();
-        int previousOnes = n;  // start with the maximum possible number of ones
+        int previousOnes = n;  
 
         for (int i = 0; i < n; i++) {
-            // pick a random number of ones for this row, <= previous row
             int ones = rand.nextInt(previousOnes + 1);
 
-            // fill the row: ones first, then zeros
             for (int j = 0; j < n; j++) {
                 if (j < ones)
                     matrix[i][j] = 1;
@@ -27,29 +23,25 @@ public class SpecialMatrix {
                     matrix[i][j] = 0;
             }
 
-            // next row must have <= current number of ones
             previousOnes = ones;
         }
     }
 
-    // Counts all 1s in O(N) time using the "stair-step" algorithm
     public int countOnes() {
         int count = 0;
         int row = 0;
-        int col = n - 1; // start at top-right corner
+        int col = n - 1;
 
         while (row < n && col >= 0) {
             if (matrix[row][col] == 1) {
-                count += (col + 1); // all 1s in this row before col
-                row++;               // move down to next row
+                count += (col + 1); 
+                row++;              
             } else {
-                col--;               // move left
+                col--;               
             }
         }
         return count;
     }
-
-    // Prints the matrix
     public void printMatrix() {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
@@ -59,13 +51,12 @@ public class SpecialMatrix {
         }
     }
 
-    // Main method
     public static void main(String[] args) {
-        SpecialMatrix sm = new SpecialMatrix(10); // create a 10x10 matrix
-        sm.createSpecialMatrix();                 // fill it
-        sm.printMatrix();                         // print it
+        SpecialMatrix sm = new SpecialMatrix(10); 
+        sm.createSpecialMatrix();               
+        sm.printMatrix();                         
 
-        int totalOnes = sm.countOnes();           // count the 1s (O(N) method)
+        int totalOnes = sm.countOnes();          
         System.out.println("Total number of 1s: " + totalOnes);
     }
 }
