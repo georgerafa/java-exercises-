@@ -1,0 +1,52 @@
+package firstapplication;
+
+import java.util.Arrays;
+
+public class SpecialMatrix {
+	int[][]matrix;
+	
+	SpecialMatrix(int n) {
+	matrix= new int[n][n];		
+	}
+
+
+	public void CreateSpecialMatrix() {
+		int k = matrix.length;
+		int randomNumber=(int)(Math.random()*k);
+		
+		for( int i=0; i<k; i++) {
+			for( int j = 0 ; j< randomNumber; j++) {
+				matrix[i][j]=1;
+				
+			}
+			randomNumber=(int)(Math.random()*randomNumber);
+		}
+	
+	}
+	
+	public int countOnes() {
+		int row = 0;  
+		int count = 0;
+		int k= matrix.length; 
+		int col= k-1;
+		
+        while (row < k && col >= 0) {
+            if (matrix[row][col] == 1) {
+                count += (col + 1); 
+                row++;              
+            } else {
+                col--;               
+            }
+        }
+        return count;
+	}
+	
+	public static void main(String[] args) {
+		SpecialMatrix newMatrix= new SpecialMatrix(6);
+		newMatrix.CreateSpecialMatrix();	
+		int totalOnes= newMatrix.countOnes();
+		System.out.println(Arrays.deepToString(newMatrix.matrix));
+		System.out.println("Total number of 1s: " + totalOnes);
+	}
+}
+
