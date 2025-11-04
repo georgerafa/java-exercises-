@@ -1,0 +1,95 @@
+// CHANGE ACADEMIC ID BEFORE SUBMITING . AMKE SURE THERE ARE 2 SEPERATE CLASSES FOR EACH CLASS IN THE SAME PACKAGE 
+
+package mycomplexnumber11684;
+public class SimpleComplex {
+	   private float real;       
+	    private float imaginary;   
+
+	    public SimpleComplex() {
+	        this.real = 0;
+	        this.imaginary = 0;
+	    }
+
+	    public SimpleComplex(float re, float im) {
+	        this.real = re;
+	        this.imaginary = im;
+	    }
+
+	    public void setReal(float re) {
+	        this.real = re;
+	    }
+
+	    public float getReal() {
+	        return this.real;
+	    }
+
+	    public void setImaginary(float im) {
+	        this.imaginary = im;
+	    }
+
+	    public float getImaginary() {
+	        return this.imaginary;
+	    }
+
+	    public float computeNorm() {
+	        return (float) Math.sqrt(real * real + imaginary * imaginary);
+	    }
+
+	    @Override
+	    public String toString() {
+	        if (imaginary >= 0)
+	            return String.format("%.2f + %.2fi", real, imaginary);
+	        else
+	            return String.format("%.2f - %.2fi", real, Math.abs(imaginary));
+	    }
+
+}
+
+
+package mycomplexnumber11684;   // <-- same package as above
+
+public class Complex extends SimpleComplex {
+
+    public Complex() {
+        super();
+    }
+
+    public Complex(float re, float im) {
+        super(re, im);
+    }
+
+    public Complex conjugate() {
+        return new Complex(getReal(), -getImaginary());
+    }
+
+    public static Complex multiply(Complex c1, Complex c2) {
+        float realPart = c1.getReal() * c2.getReal() - c1.getImaginary() * c2.getImaginary();
+        float imagPart = c1.getReal() * c2.getImaginary() + c1.getImaginary() * c2.getReal();
+        return new Complex(realPart, imagPart);
+    }
+
+    public static void main(String[] args) {
+
+        Complex[] compArray = new Complex[10];
+        float[] norms = new float[10];
+
+        for (int i = 0; i < compArray.length; i++) {
+            float re = (float) (Math.random() * 10 - 5);  // από -5 έως 5
+            float im = (float) (Math.random() * 10 - 5);
+            compArray[i] = new Complex(re, im);
+            norms[i] = compArray[i].computeNorm();
+        }
+
+        System.out.println("i\tComplex\t\t\tConjugate\t\t\tProduct\t\t\tNorm²");
+        System.out.println("-----------------------------------------------------------------------");
+
+        for (int i = 0; i < compArray.length; i++) {
+            Complex c = compArray[i];
+            Complex conj = c.conjugate();
+            Complex prod = multiply(c, conj);
+            float normSq = norms[i] * norms[i];
+
+            System.out.printf("%d\t%s\t%s\t%s\t%.2f\n", i + 1, c, conj, prod, normSq);
+        }
+    }
+}
