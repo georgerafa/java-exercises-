@@ -1,0 +1,54 @@
+package MyComplexNumber;
+
+public class Complex extends SimpleComplex {
+	Complex(){
+		super();
+	}
+	
+	Complex(float re, float im){
+		super(re, im);
+	}
+	
+	Complex conjugate()
+	{
+		return new Complex(this.getReal(), -this.getReal());
+	}
+	
+	static Complex multiply(Complex c1, Complex c2) {
+ 		return new Complex((c1.getReal()*c2.getReal()) - (c1.getImaginary()*c2.getImaginary()), (c1.getReal()*c2.getImaginary()) + (c2.getReal()*c1.getImaginary()));
+	}
+	public String toString() {
+	    if (getImaginary() < 0)
+	        return getReal() + " - " + (-getImaginary()) + "i";
+	    else
+	        return getReal() + " + " + getImaginary() + "i";}
+	
+	public static void main(String[] args) {
+		Complex[] compArray = new Complex[10];
+		
+		for(int i=0; i<10; i++) {
+			compArray[i] = new Complex((float)(Math.random() * 100), (float)(Math.random() * 100));
+		}
+		
+		float[] norms = new float[10];
+		
+		for(int i=0; i<10; i++) {
+			norms[i] = compArray[i].computeNorm();
+		}
+		
+		for(int i=0; i<10; i++) {
+			Complex c = compArray[i];
+			Complex conj = c.conjugate();
+			Complex mul = multiply(c, conj);
+			float square = c.computeNorm()*c.computeNorm();
+			
+			System.out.println("Complex " + i + ": " + c.getReal() + " + " + c.getImaginary() + "i, " + conj + ", " + mul + ", " + square);
+
+		}
+		
+		
+ 		
+
+	}
+
+}
